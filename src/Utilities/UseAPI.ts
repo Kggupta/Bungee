@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SHEET_ID, IS_LOCAL, LOCAL_API, REMOTE_API} from '@env'
+import {SHEET_ID, USE_LOCAL, LOCAL_API, REMOTE_API} from '@env'
 import Term from "../Types/Term";
 
 /**
@@ -8,7 +8,7 @@ import Term from "../Types/Term";
  * @returns The full API url
  */
 function makeUrl(route : string) : string {
-    const source = (IS_LOCAL ? 
+    const source = (USE_LOCAL ? 
                             LOCAL_API : 
                             REMOTE_API) || '';
 
@@ -22,7 +22,6 @@ function makeUrl(route : string) : string {
  */
 async function getTerm(id: string): Promise<Term> {
     const res = await axios.get<Term>(makeUrl(id))
-
     return res.data;
 }
 
