@@ -15,7 +15,7 @@ async function saveSheetId(id : string) {
  * @returns The sheet ID
  */
 async function getSheetId() : Promise<string> {
-    return await AsyncStorage.getItem(SHEET_ID_KEY) || '';
+    return await AsyncStorage.getItem(SHEET_ID_KEY) || SHEET_ID;
 }
 
 export {saveSheetId, getSheetId};
