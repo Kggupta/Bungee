@@ -1,7 +1,7 @@
 import Item from './Item';
 
 type Term = {
-    id : string,
+    term : string,
     income: Item[],
     expenses: Item[]
 };
