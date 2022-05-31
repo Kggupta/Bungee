@@ -1,5 +1,6 @@
 import axios from "axios";
-import {SHEET_ID, USE_LOCAL, LOCAL_API, REMOTE_API} from '@env'
+import {USE_LOCAL, LOCAL_API, REMOTE_API} from '@env'
+import { getSheetId } from "./UseAsyncStorage";
 import Term from "../Types/Term";
 
 /**
@@ -7,12 +8,12 @@ import Term from "../Types/Term";
  * @param route - The API route
  * @returns The full API url
  */
-function makeUrl(route : string) : string {
+async function makeUrl(route : string) : Promise<string> {
     const source = (USE_LOCAL ? 
                             LOCAL_API : 
                             REMOTE_API) || '';
 
-    return `${source}${SHEET_ID}/${route}`;
+    return `${source}${await getSheetId()}/${route}`;
 }
 
 
@@ -21,7 +22,7 @@ function makeUrl(route : string) : string {
  * @param id - Term name
  */
 async function getTerm(id: string): Promise<Term> {
-    const res = await axios.get<Term>(makeUrl(id))
+    const res = await axios.get<Term>(await makeUrl(id))
     return res.data;
 }
 
@@ -30,7 +31,7 @@ async function getTerm(id: string): Promise<Term> {
  * @param id - Term name
  */
 async function getTerms() : Promise<Term[]> {
-    const res = await axios.get<Term[]>(makeUrl(''))
+    const res = await axios.get<Term[]>(await makeUrl(''))
     return res.data;
 }
 
@@ -41,7 +42,7 @@ async function getTerms() : Promise<Term[]> {
  * @param term - Term ID
  */
 async function updateIncome(item : string, term : string, value : number) {
-    await axios.patch(makeUrl('income'), {item, term, value})
+    await axios.patch(await makeUrl('income'), {item, term, value})
 }
 
 
@@ -51,7 +52,7 @@ async function updateIncome(item : string, term : string, value : number) {
  * @param term - Term ID
  */
 async function updateExpense(item: string, term : string, value : number) {
-    await axios.patch(makeUrl('expense'), {item, term, value})
+    await axios.patch(await makeUrl('expense'), {item, term, value})
 }
 
 export {getTerm, getTerms, updateIncome, updateExpense};
