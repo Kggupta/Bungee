@@ -1,5 +1,5 @@
 import axios from "axios";
-import {USE_LOCAL, LOCAL_API, REMOTE_API} from '@env'
+import {USE_LOCAL, LOCAL_API, REMOTE_API} from "@env";
 import { getSheetId } from "./UseAsyncStorage";
 import Term from "../Types/Term";
 
