@@ -1,19 +1,21 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {USE_LOCAL, LOCAL_API, REMOTE_API} from "@env";
 import { getSheetId } from "./UseAsyncStorage";
 import Term from "../Types/Term";
 
+
+function getSource() {
+    return (USE_LOCAL ? 
+            LOCAL_API : 
+            REMOTE_API) || '';
+}
 /**
  * Get the full api url for the route and environment
  * @param route - The API route
  * @returns The full API url
  */
 async function makeUrl(route : string) : Promise<string> {
-    const source = (USE_LOCAL ? 
-                            LOCAL_API : 
-                            REMOTE_API) || '';
-
-    return `${source}${await getSheetId()}/${route}`;
+    return `${getSource()}${await getSheetId()}/${route}`;
 }
 
 
@@ -55,4 +57,22 @@ async function updateExpense(item: string, term : string, value : number) {
     await axios.patch(await makeUrl('expense'), {item, term, value})
 }
 
-export {getTerm, getTerms, updateIncome, updateExpense};
+
+/**
+ * Tests if the sheet is valid
+ * @param sheet - Sheet ID
+ * @returns If it's valid or not
+ */
+async function testSheet(sheet : string) : Promise<boolean> {
+    let res;
+    try {
+        res = await axios.get<Term[]>(`${getSource()}${sheet}/`)
+        return res.status == 200
+    } catch (e) {
+        if ((e as AxiosError).message == "Network Error") throw e;
+        return false;
+
+    }
+}
+
+export {getTerm, getTerms, updateIncome, updateExpense, testSheet};
