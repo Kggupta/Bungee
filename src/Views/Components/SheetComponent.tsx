@@ -34,7 +34,6 @@ const SheetComponent = () => {
         <Card.Content>
           <TextInput autoComplete="off" autoCorrect={false} label="Link" onChangeText={text => setText(text)}/>
           <View style={styles.buttons}>
-            <Button icon="history" onPress={runTests}>Test</Button>
             <Button icon="content-save" disabled={success != 'check-circle'} onPress={saveSheet}>Save</Button>
             <Icon style={styles.test} name={success} tvParallaxProperties={false}/>
           </View>
