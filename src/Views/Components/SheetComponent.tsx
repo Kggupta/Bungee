@@ -34,8 +34,8 @@ const SheetComponent = () => {
         <Card.Content>
           <TextInput autoComplete="off" autoCorrect={false} label="Link" onChangeText={text => setText(text)}/>
           <View style={styles.buttons}>
-            <Button icon="content-save" disabled={success != 'check-circle'} onPress={saveSheet}>Save</Button>
             <Icon style={styles.test} name={success} tvParallaxProperties={false}/>
+            <Button icon="content-save" onPress={saveSheet}>Save</Button>
           </View>
         </Card.Content>
       </Card>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 6
   },
   buttons: {
-    alignSelf: 'center',
+    alignSelf: 'flex-end',
     padding: 10,
     flexDirection: 'row'
   },
