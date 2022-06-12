@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, Card, Menu, List} from 'react-native-paper';
 import Term from '../../Types/Term';
 import { getTerms } from '../../Utilities/UseAPI';
-import { getTerm, saveTerm } from '../../Utilities/UseAsyncStorage';
+import { saveTerm } from '../../Utilities/UseAsyncStorage';
 
 const PickTerm = () => {
   const [term, setTerm] = React.useState("Select Term");
