@@ -31,8 +31,8 @@ async function saveTerm(id : string) {
  * Get the term from async storage
  * @returns The term id
  */
-async function getTerm() : Promise<string> {
+async function getTermKey() : Promise<string> {
     return await AsyncStorage.getItem(TERM_ID_KEY) || "";
 }
 
-export {saveSheetId, getSheetId, saveTerm, getTerm};
+export {saveSheetId, getSheetId, saveTerm, getTermKey};
