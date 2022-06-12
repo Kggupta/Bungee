@@ -12,4 +12,13 @@ function getSheetIdFromUrl(url : string) : string {
     return text.groups.id;
 }
 
-export {getSheetIdFromUrl}
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
+
+function asDollar(value? : number) : string {
+    return formatter.format(value || 0);
+}
+
+export {getSheetIdFromUrl, asDollar}
