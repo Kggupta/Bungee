@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { DarkTheme, Button, Provider as PaperProvider, Divider, Title } from 'react-native-paper';
 import Term from '../Types/Term';
 import { getTerm } from '../Utilities/UseAPI';
@@ -11,19 +11,29 @@ import Loading from './Loading';
 const Data = () => {
   const [term, setTerm] = React.useState<Term>();
   const [termTitle, setTitle] = React.useState("No Term Selected");
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [loadingView, setLoading] = React.useState(true);
   const loadTerm = async () => {
     const title = await getTermKey();
     setTerm(await getTerm(title));
     setTitle(title);
   }
+
+  const reset = () => {
+    setTerm(undefined);
+    setLoading(true);
+  }
+
   React.useEffect(() => {
+    setLoading(false);
     loadTerm();
-  }, []);
+  }, [loadingView]);
 
   return (
-    term ? (
-    <ScrollView>
-      <Title style={styles.header} onPress={loadTerm}>
+    (!loadingView && term) ? (
+    <ScrollView
+      refreshControl={<RefreshControl  refreshing={refreshing} onRefresh={reset} />}>
+      <Title style={styles.header}>
         EXPENSES - {termTitle}
       </Title>
       <Divider />
