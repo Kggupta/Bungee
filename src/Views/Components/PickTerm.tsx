@@ -3,27 +3,23 @@ import { StyleSheet, View } from 'react-native';
 import { Button, TextInput, Card, Menu, List} from 'react-native-paper';
 import Term from '../../Types/Term';
 import { getTerms } from '../../Utilities/UseAPI';
-import { saveTerm } from '../../Utilities/UseAsyncStorage';
+import { getTermKey, saveTerm } from '../../Utilities/UseAsyncStorage';
 
 const PickTerm = () => {
   const [term, setTerm] = React.useState("Select Term");
   const [allTerms, setTerms] = React.useState<Term[]>([]);
   const [visible, setVisible] = React.useState(false);
 
-  const openMenu = async () => {
-      try {
-        if (allTerms.length == 0) {
-            setTerms(await getTerms());
-        }
-        setVisible(true)
-      } catch (e) {
-        console.log(e);
-      }
-
-    };
+  const openMenu = async () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
-  
+  React.useEffect(() => {
+    const populate = async () => {
+      setTerms(await getTerms());
+      setTerm(await getTermKey());
+    }
+    populate();
+  },[])
   return (
     <View style={styles.card}>
       <Card>
