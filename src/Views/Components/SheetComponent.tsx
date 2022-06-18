@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { Button, TextInput, Card} from 'react-native-paper';
+import { Button, TextInput, Card, DarkTheme} from 'react-native-paper';
 import { getSheetIdFromUrl } from '../../Utilities/SheetUtils';
 import { testSheet } from '../../Utilities/UseAPI';
 import { saveSheetId } from '../../Utilities/UseAsyncStorage';
@@ -29,12 +29,13 @@ const SheetComponent = () => {
   }
   return (
     <View style={styles.card}>
-      <Card>
-        <Card.Title title="Google Sheet" subtitle="Set the sheet link" />
+      <Card theme={DarkTheme}>
+        <Card.Title titleStyle={styles.text} subtitleStyle={styles.text} 
+                    title="Google Sheet" subtitle="Set the sheet link" />
         <Card.Content>
-          <TextInput autoComplete="off" autoCorrect={false} label="Link" onChangeText={text => setText(text)}/>
+          <TextInput theme={DarkTheme} autoComplete="off" autoCorrect={false} label="Link" onChangeText={text => setText(text)}/>
           <View style={styles.buttons}>
-            <Icon style={styles.test} name={success} tvParallaxProperties={false}/>
+            <Icon name={success} tvParallaxProperties={false}/>
             <Button icon="content-save" onPress={saveSheet}>Save</Button>
           </View>
         </Card.Content>
@@ -47,16 +48,19 @@ const styles = StyleSheet.create({
   card: {
     padding: 10,
     elevation: 3,
-    borderRadius: 6
+    borderRadius: 6,
+    color: 'white'
   },
   buttons: {
     alignSelf: 'flex-end',
     padding: 10,
     flexDirection: 'row'
   },
-  test: {
-    padding: 5, 
-    alignSelf: 'flex-end' 
+  text: {
+    color: 'white'
+  },
+  icon: {
+    backgroundColor: 'white'
   }
 })
   
