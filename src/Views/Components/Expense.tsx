@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import CurrencyInput from 'react-native-currency-input';
 import { Icon } from 'react-native-elements';
-import { Card, Text } from 'react-native-paper';
+import { Card, DarkTheme, Text } from 'react-native-paper';
 import ItemCard from '../../Types/ItemCard';
 import { asDollar } from '../../Utilities/SheetUtils';
 import { updateExpense } from '../../Utilities/UseAPI';
@@ -31,23 +31,22 @@ const Expense = (props : ItemCard) => {
   
   return (
     <View style={styles.card} key={props.item.name}>
-      <Card>
+      <Card theme={DarkTheme}>
         <Text style={styles.nameText}>
             {props.item.name} - {asDollar(itemValue)}
         </Text>
 
-        <CurrencyInput 
-          value={value}
-          prefix="$"
-          delimiter=','
-          separator='.'
-          precision={2}
-          onChangeValue={setValue}
-          style={styles.amountEntry}/>
-
           <View style={styles.iconList}>
-            <Icon raised disabled={!value || value<=0} style={styles.icon} name="add" tvParallaxProperties={false} onPress={updatePos}/>
-            <Icon raised disabled={!value || value<=0} style={styles.icon} name="remove" tvParallaxProperties={false} onPress={updateNeg}/>
+            <CurrencyInput 
+              value={value}
+              prefix="$"
+              delimiter=','
+              separator='.'
+              precision={2}
+              onChangeValue={setValue}
+              style={styles.amountEntry}/>
+            <Icon disabled={!value || value<=0} style={styles.icon} name="add" tvParallaxProperties={false} onPress={updatePos}/>
+            <Icon disabled={!value || value<=0} style={styles.icon} name="remove" tvParallaxProperties={false} onPress={updateNeg}/>
           </View>
 
       </Card>
@@ -59,22 +58,26 @@ const styles = StyleSheet.create({
   card: {
     paddingHorizontal: 10,
     paddingBottom: 2,
-    borderRadius: 2
+    borderRadius: 2,
   },
   nameText: {
     paddingLeft: 10,
     paddingTop: 5,
     fontSize: 16,
+    color: 'white'
   },
   amountEntry: {
     height: 25,
     paddingHorizontal: 10,
     paddingTop: 3,
     flexDirection:'row',
-    alignSelf: 'flex-start'
+    textAlign: 'left',
+    color: 'white'
   },
   icon: {
     flexDirection: 'row',
+    backgroundColor: 'white',
+    padding: 5
   },
   iconList: {
     alignSelf:'flex-end',
@@ -82,6 +85,7 @@ const styles = StyleSheet.create({
   }
 
 })
+  
   
 
 export default Expense;
